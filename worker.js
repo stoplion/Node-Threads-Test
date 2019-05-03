@@ -1,8 +1,7 @@
-const { parentPort, workerData } = require('worker_threads');
-const sleep = require('./sleep');
+const { parentPort } = require('worker_threads');
 
-console.log('computation started');
-sleep(1000000000);
-console.log('computation done');
-
-parentPort.postMessage(`computation done ${workerData}`);
+parentPort.on('message', (message) => {
+  parentPort.postMessage(
+    `Recieved from the worker thread A-OK. Message recieved: ${message}. Now, back to you main thread. Over.`
+  );
+});
